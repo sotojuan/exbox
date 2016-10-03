@@ -15,7 +15,7 @@ defmodule ExBox.Mixfile do
   end
 
   def application do
-    [applications: [:logger]]
+    [applications: [:logger, :termsize]]
   end
 
   defp deps do
