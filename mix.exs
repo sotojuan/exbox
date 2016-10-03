@@ -20,7 +20,9 @@ defmodule ExBox.Mixfile do
 
   defp deps do
     [
-      {:credo, "~> 0.4", only: [:dev, :test]}
+      {:exchalk, "~> 1.0.0" },
+      {:credo, "~> 0.4", only: [:dev, :test]},
+      {:termsize, "~> 1.0.0" }
     ]
   end
 
