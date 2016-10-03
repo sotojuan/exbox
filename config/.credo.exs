@@ -8,7 +8,8 @@
         },
         checks: [
           {Credo.Check.Readability.MaxLineLength, false},
-          {Credo.Check.Refactor.CyclomaticComplexity, false}
+          {Credo.Check.Refactor.CyclomaticComplexity, false},
+          {Credo.Check.Refactor.ABCSize, false}
         ]
     }
   ]
