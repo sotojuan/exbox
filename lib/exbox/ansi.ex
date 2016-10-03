@@ -39,7 +39,6 @@ defmodule ExBox.ANSI do
 
         text
         |> Enum.map(&to_tuple/1)
-
         |> Enum.map(fn({str, width}) ->
             String.duplicate(pad, diff.(max_w, width)) <> str
         end)
