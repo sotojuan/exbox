@@ -14,7 +14,7 @@ defmodule ExBox.Boxes do
     }
   end
 
-  def double do
+  def round do
     %{
       :top_left => "╭",
       :top_right => "╮",
@@ -25,7 +25,7 @@ defmodule ExBox.Boxes do
     }
   end
 
-  def round do
+  def double do
     %{
       :top_left => "╔",
       :top_right => "╗",
