@@ -30,7 +30,7 @@ defmodule ExBox.Mixfile do
 
   defp description do
     """
-    Cool text and CLI boxes
+    Create boxes in the terminal
     """
   end
 
