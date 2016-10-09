@@ -1,5 +1,7 @@
 defmodule ExBox do
-  @moduledoc false
+  @moduledoc """
+  Provides a simple interface to text boxes.
+  """
 
   @nl "\n"
   @pad " "
@@ -8,6 +10,68 @@ defmodule ExBox do
   alias ExBox.ANSI
   alias ExBox.Width
 
+  @doc """
+  Returns a text box with the given text and style options. Text boxes are returned
+  in List form, which can be printed.
+
+  To convert to a string, use `IO.iodata_to_binary`.
+
+  **Options**
+
+  ## `border_color`
+  Color of the box border.
+
+  Values: `:black :red :green :yellow :blue :magenta :cyan :white :gray :grey`
+
+  ## `background_color`
+  Color of the background.
+
+  Values: `:black :red :green :yellow :blue :magenta :cyan :white`
+
+  ## `border_style`
+  Style of the box border.
+
+  Values: `:single :double :round :single_double :double_single :classic`
+
+  Default: `:single`
+
+  ## `padding`
+  Space between the text and box border.
+
+  Default: `0`
+
+  Accepts a number or an Keyword List with any of the `top`, `right`, `bottom`, `left` properties.
+  When a number is specified, the left/right padding is 3 times the top/bottom to make it look nice.
+
+  ## `margin`
+  Space around the box.
+
+  Default: `0`
+
+  Accepts a number or an Keyword List with any of the `top`, `right`, `bottom`, `left` properties.
+  When a number is specified, the left/right padding is 3 times the top/bottom to make it look nice.
+
+  ## `align`
+  Align the text in the box based on the widest line.
+
+  Values: `:left :center :right`
+
+  Default: `:left`
+
+  ## `float`
+  Float the box on the available terminal screen space.
+
+  Values: `:right :center :left`
+
+  Default: `:left`
+
+  Examples:
+
+  `"hello" |> ExBox.get`
+
+  `"hello" |> ExBox.get(padding: 5, border_color: :red)`
+  """
+  @spec get(String.t, Keyword.t) :: List.t
   def get(text, opts \\ [])
 
   def get(text, opts) when is_list(text) do
