@@ -31,9 +31,9 @@ defmodule ExBox do
   ## `border_style`
   Style of the box border.
 
-  Values: `:single :double :round :single_double :double_single :classic`
-
   Default: `:single`
+
+  Values: `:single :double :round :single_double :double_single :classic`
 
   ## `padding`
   Space between the text and box border.
@@ -54,16 +54,16 @@ defmodule ExBox do
   ## `align`
   Align the text in the box based on the widest line.
 
-  Values: `:left :center :right`
-
   Default: `:left`
+
+  Values: `:left :center :right`
 
   ## `float`
   Float the box on the available terminal screen space.
 
-  Values: `:right :center :left`
-
   Default: `:left`
+
+  Values: `:right :center :left`
 
   Examples:
 
