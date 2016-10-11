@@ -15,7 +15,7 @@ In your `mix.exs`:
 ```elixir
 defp deps do
   [
-    { :exbox, "~> 0.0.0" }
+    { :exbox, "~> 1.0.0" }
   ]
 end
 ```
