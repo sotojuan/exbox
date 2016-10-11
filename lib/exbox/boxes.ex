@@ -1,7 +1,5 @@
 defmodule ExBox.Boxes do
-  @moduledoc """
-  Boxes for use in the terminal
-  """
+  @moduledoc false
 
   def single do
     %{
