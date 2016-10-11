@@ -13,6 +13,10 @@ Inspired by [boxen](https://github.com/sindresorhus/boxen).
 In your `mix.exs`:
 
 ```elixir
+def application do
+  [applications: [:exbox]]
+end
+
 defp deps do
   [
     { :exbox, "~> 1.0.0" }
