@@ -10,7 +10,7 @@ defmodule ExBox.ANSI do
   @doc """
   Strip ANSI escape codes
   """
-  @spec strip(String.t) :: String.t
+  @spec strip(String.t()) :: String.t()
   def strip(string) do
     String.replace(string, @regex, "")
   end
@@ -20,14 +20,12 @@ defmodule ExBox.ANSI do
   """
   # Needs type spec, support ""
   def align(string, options \\ []) do
-    opts = Keyword.merge([
-      align: :center,
-      split: "\n",
-      pad: " "], options)
+    opts = Keyword.merge([align: :center, split: "\n", pad: " "], options)
 
     case opts[:align] do
       :left ->
         string
+
       _ ->
         align = opts[:align]
         split = opts[:split]
@@ -39,8 +37,8 @@ defmodule ExBox.ANSI do
 
         text
         |> Enum.map(&to_tuple/1)
-        |> Enum.map(fn({str, width}) ->
-            String.duplicate(pad, diff.(max_w, width)) <> str
+        |> Enum.map(fn {str, width} ->
+          String.duplicate(pad, diff.(max_w, width)) <> str
         end)
         |> Enum.join(split)
     end
@@ -49,13 +47,13 @@ defmodule ExBox.ANSI do
   defp max_width(text) do
     text
     |> Enum.map(&Width.string/1)
-    |> Enum.max
+    |> Enum.max()
   end
 
   defp to_tuple(str), do: {str, Width.string(str)}
 
   defp half_diff(max_width, cur_width) do
-    div((max_width - cur_width), 2)
+    div(max_width - cur_width, 2)
   end
 
   defp full_diff(max_width, cur_width) do

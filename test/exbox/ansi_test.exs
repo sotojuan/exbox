@@ -2,9 +2,9 @@ defmodule ExStringTest.ANSI do
   use ExUnit.Case
   alias ExBox.ANSI
 
-  defp red(str), do: "#{IO.ANSI.red}#{str}#{IO.ANSI.reset}"
-  defp bright(str), do: "#{IO.ANSI.bright}#{str}#{IO.ANSI.reset}"
-  defp cyan(str), do: "#{IO.ANSI.cyan}#{str}#{IO.ANSI.reset}"
+  defp red(str), do: "#{IO.ANSI.red()}#{str}#{IO.ANSI.reset()}"
+  defp bright(str), do: "#{IO.ANSI.bright()}#{str}#{IO.ANSI.reset()}"
+  defp cyan(str), do: "#{IO.ANSI.cyan()}#{str}#{IO.ANSI.reset()}"
 
   test "strips ANSI escape codes" do
     str_a = "\u001b[4m\u001b[42m\u001b[31mfoo\u001b[39m\u001b[49m\u001b[24mfoo"
@@ -18,7 +18,9 @@ defmodule ExStringTest.ANSI do
 
   test "align supports ANSI" do
     input = "#{red("one")}" <> " two " <> "#{bright("three\n")}" <> "#{cyan("four ")}" <> "five"
-    output = "#{red("one")}" <> " two " <> "#{bright("three\n  ")}" <> "#{cyan("four ")}" <> "five"
+
+    output =
+      "#{red("one")}" <> " two " <> "#{bright("three\n  ")}" <> "#{cyan("four ")}" <> "five"
 
     assert ANSI.align(input) == output
   end

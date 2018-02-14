@@ -4,18 +4,18 @@ defmodule ExStringTest.Width do
 
   test "returns true if codepoint is fullwidth" do
     assert true == Width.is_fullwidth_char('あ')
-  	assert true == Width.is_fullwidth_char('谢')
-  	assert true == Width.is_fullwidth_char('고')
-  	assert false == Width.is_fullwidth_char('a')
+    assert true == Width.is_fullwidth_char('谢')
+    assert true == Width.is_fullwidth_char('고')
+    assert false == Width.is_fullwidth_char('a')
   end
 
   test "returns correct string width" do
     assert 5 == Width.string("abcde")
-  	assert 6 == Width.string("古池や")
-  	assert 9 == Width.string("あいうabc")
-  	assert 9 == Width.string("ノード.js")
-  	assert 4 == Width.string("你好")
-  	assert 10 == Width.string("안녕하세요")
+    assert 6 == Width.string("古池や")
+    assert 9 == Width.string("あいうabc")
+    assert 9 == Width.string("ノード.js")
+    assert 4 == Width.string("你好")
+    assert 10 == Width.string("안녕하세요")
   end
 
   test "string width ignores control characters" do

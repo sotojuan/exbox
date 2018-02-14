@@ -71,12 +71,12 @@ defmodule ExBox do
 
   `"hello" |> ExBox.get(padding: 5, border_color: :red)`
   """
-  @spec get(String.t, Keyword.t) :: List.t
+  @spec get(String.t(), Keyword.t()) :: List.t()
   def get(text, opts \\ [])
 
   def get(text, opts) when is_list(text) do
     text
-    |> IO.iodata_to_binary
+    |> IO.iodata_to_binary()
     |> get(opts)
   end
 
@@ -93,36 +93,53 @@ defmodule ExBox do
     # Merge given options with default, preferring the given
     opts = Keyword.merge(default, opts)
 
-    {cols, _} = TermSize.get
+    {cols, _} = TermSize.get()
     chars = get_border_chars(opts[:border_style])
     padding = get_list(opts[:padding])
     margin = get_list(opts[:margin])
 
     # Align the text, handling possible ANSI codes
-    text = ANSI.align(text, [align: opts[:align]])
+    text = ANSI.align(text, align: opts[:align])
     # Split the lines and add given padding to the top or bottom
     lines = text |> String.split("\n") |> fill_lines(padding)
 
     # Get the width of the widest line and add the left and right padding
     content_width = Width.widest_line(text) + padding[:left] + padding[:right]
     padding_left = duplicate(@pad, padding[:left])
+
     # Overwrite left margin depending on given float options (center and right floats need specific numbers)
     margin_left = align_left(margin[:left], opts[:float], content_width, cols)
 
     # These lines take care of the borders, sizing them to fit the given text
     horizontal = duplicate(chars.horizontal, content_width)
-    top = colorize_border([duplicate(@nl, margin[:top]), margin_left, chars.top_left, horizontal, chars.top_right], opts)
-    bottom = colorize_border([margin_left, chars.bottom_left, horizontal, chars.bottom_right, duplicate(@nl, margin[:bottom])], opts)
+
+    top =
+      colorize_border(
+        [duplicate(@nl, margin[:top]), margin_left, chars.top_left, horizontal, chars.top_right],
+        opts
+      )
+
+    bottom =
+      colorize_border(
+        [
+          margin_left,
+          chars.bottom_left,
+          horizontal,
+          chars.bottom_right,
+          duplicate(@nl, margin[:bottom])
+        ],
+        opts
+      )
+
     side = colorize_border(chars.vertical, opts)
 
     # For each line, add left margin, the side border, padding, text, and the ending side border
     middle =
       lines
-      |> Enum.map(
-        fn(line) ->
-          padding_right = duplicate(@pad, content_width - Width.string(line) - padding[:left])
-          [margin_left, side, colorize_content([padding_left, line, padding_right], opts), side]
-        end)
+      |> Enum.map(fn line ->
+        padding_right = duplicate(@pad, content_width - Width.string(line) - padding[:left])
+        [margin_left, side, colorize_content([padding_left, line, padding_right], opts), side]
+      end)
       |> Enum.join(@nl)
 
     [top, @nl, middle, @nl, bottom]
@@ -152,6 +169,7 @@ defmodule ExBox do
       {:ok, c} ->
         # Apply the given color `c` to the string representation of the border characters
         apply(ExChalk, c, [IO.iodata_to_binary(x)])
+
       :error ->
         x
     end
@@ -163,11 +181,12 @@ defmodule ExBox do
         # Apply the given color `c` to the background of the content
         color =
           "bg_"
-          |> String.to_charlist
+          |> String.to_charlist()
           |> Enum.concat(Atom.to_charlist(c))
-          |> List.to_atom
+          |> List.to_atom()
 
         apply(ExChalk, color, [IO.iodata_to_binary(x)])
+
       :error ->
         x
     end
@@ -192,8 +211,9 @@ defmodule ExBox do
 
     case float do
       :center ->
-        pad_width = div((cols - content_width), 2)
+        pad_width = div(cols - content_width, 2)
         List.duplicate([@pad], pad_width)
+
       :right ->
         pad_width = Enum.max([cols - content_width - 3, 0])
 
@@ -202,6 +222,7 @@ defmodule ExBox do
         else
           List.duplicate([@pad], pad_width)
         end
+
       _ ->
         List.duplicate([@pad], margin_left)
     end
