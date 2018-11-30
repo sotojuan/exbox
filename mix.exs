@@ -21,8 +21,8 @@ defmodule ExBox.Mixfile do
   defp deps do
     [
       {:exchalk, "~> 1.0.2"},
-      {:ex_doc, "~> 0.14", only: :dev},
-      {:termsize, "~> 1.0.0"}
+      {:ex_doc, "~> 0.19", only: :dev},
+      {:termsize, "~> 1.0.1"}
     ]
   end
 
