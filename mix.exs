@@ -6,8 +6,8 @@ defmodule ExBox.Mixfile do
       app: :exbox,
       version: "1.0.0",
       elixir: "~> 1.3",
-      build_embedded: Mix.env == :prod,
-      start_permanent: Mix.env == :prod,
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
       description: description(),
       package: package(),
       deps: deps()
@@ -20,9 +20,9 @@ defmodule ExBox.Mixfile do
 
   defp deps do
     [
-      {:exchalk, "~> 1.0.2" },
+      {:exchalk, "~> 1.0.2"},
       {:ex_doc, "~> 0.14", only: :dev},
-      {:termsize, "~> 1.0.0" }
+      {:termsize, "~> 1.0.0"}
     ]
   end
 
